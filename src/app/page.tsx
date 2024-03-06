@@ -4,6 +4,7 @@ import FileShare from "@/components/FileShare";
 import { Button, Form, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import GradientCircles from "../components/circularUI";
 
 const socket: Socket = io("https://fileshare-backend-bezv.onrender.com");
 
@@ -76,7 +77,7 @@ export default function Home() {
       </Modal>
 
       {isRoomJoined ? (
-        <FileShare
+        <GradientCircles
           currentUser={username}
           roomId={roomId}
           userLists={userLists}
@@ -84,6 +85,13 @@ export default function Home() {
           socket={socket}
         />
       ) : (
+        // <FileShare
+        //   currentUser={username}
+        //   roomId={roomId}
+        //   userLists={userLists}
+        //   activeUsers={activeUsersCount}
+        //   socket={socket}
+        // />
         <div className="flex justify-center items-center h-[100vh]">
           <Button
             onClick={showModal}
