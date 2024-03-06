@@ -35,7 +35,12 @@ const NotificationMenu = ({
     <Menu>
       {notifications.map((notification) => (
         <Menu.Item key={notification.id} className="p-4 w-auto">
-          <div className="flex items-center">
+          <div
+            className="flex items-center"
+            onClick={() =>
+              handleDownload(notification.filePath, notification.fileName)
+            }
+          >
             <Avatar className="mr-2">
               {notification.username.split("")[0]}
             </Avatar>
@@ -44,12 +49,7 @@ const NotificationMenu = ({
               <span className="text-xs text-gray-500">
                 {notification.fileName}
               </span>
-              <DownloadOutlined
-                onClick={() =>
-                  handleDownload(notification.filePath, notification.fileName)
-                }
-                className="text-blue-500 ml-2"
-              />
+              <DownloadOutlined className="text-blue-500 ml-2" />
             </div>
           </div>
         </Menu.Item>

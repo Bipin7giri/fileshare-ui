@@ -48,6 +48,7 @@ export default function Home() {
       roomId: values.roomId,
       username: values.username,
     });
+    handleCancel();
   }
 
   return (
