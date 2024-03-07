@@ -59,7 +59,7 @@ const NotificationMenu = ({
 
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end  cursor-pointer items-center">
         <Badge count={notifications.length} className="mr-2">
           <BellOutlined style={{ fontSize: "24px", color: "#08c" }} />
         </Badge>

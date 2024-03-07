@@ -5,7 +5,9 @@ import Dragger from "antd/es/upload/Dragger";
 import React, { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 import NotificationMenu from "./CustomNotification";
-
+import { random } from "lodash";
+import { FaUsers} from "react-icons/fa";
+import { SiGoogleclassroom } from "react-icons/si";
 const GradientCircles = ({
   activeUsers,
   socket,
@@ -24,13 +26,10 @@ const GradientCircles = ({
   const maxX = 350;
   const minY = -150;
   const maxY = 310;
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const uploadFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
-
     try {
       const response = await fetch(
         "https://fileshare-backend-bezv.onrender.com/api/v1/app/upload",
@@ -52,10 +51,8 @@ const GradientCircles = ({
         fileName: responseData.fileName,
       });
       console.log("File uploaded successfully:", responseData);
-      // Handle success
     } catch (error: any) {
       console.error("Error uploading file:", error.message);
-      // Handle error
     }
   };
   useEffect(() => {
@@ -74,8 +71,20 @@ const GradientCircles = ({
 
   return (
     <div>
-      <div className="flex justify-end p-8">
-        <NotificationMenu notifications={files} />
+      <div className="flex items-center mb-8 justify-between p-8">
+        <div className="flex items-center gap-4">
+          <SiGoogleclassroom className="text-red-400" />
+          <h1 className="font-bold text-red-400">Room  : {roomId}</h1>
+        </div>
+        <div className="flex items-center gap-4">
+          <FaUsers className="text-green-400" />
+          <h1 className="font-bold text-green-400">
+            Active Users : {activeUsers}
+          </h1>
+        </div>
+        <NotificationMenu
+          notifications={files}
+        />
       </div>
       <div className="flex relative justify-center items-center h-screen">
         <div className="w-[640px] h-[640px] rounded-full bg-[#CCEAEC] flex justify-center items-center">
@@ -97,6 +106,13 @@ const GradientCircles = ({
                     const x =
                       Math.floor(Math.random() * (maxX - minX + 1)) + minX;
                     const y = minY + offset;
+
+                    // Generate a random color
+                    const randomColor = `rgb(${random(0, 255)}, ${random(
+                      0,
+                      255
+                    )}, ${random(0, 255)})`;
+
                     return (
                       <div
                         key={index}
@@ -108,7 +124,13 @@ const GradientCircles = ({
                           zIndex: index + 1,
                         }}
                       >
-                        <Avatar style={{ backgroundColor: "#f56a00" }}>
+                        <Avatar
+                          style={{
+                            backgroundColor: randomColor,
+                            color: "#fff",
+                            fontWeight: "bold",
+                          }}
+                        >
                           {user.split(" ")[0]}
                         </Avatar>
                       </div>
@@ -119,9 +141,9 @@ const GradientCircles = ({
                       customRequest={({ file, onSuccess, onError }: any) => {
                         uploadFile(file as File).then(() => {
                           onSuccess();
-                          notification.info({
-                            message: "File Uploaded Successfully",
-                          });
+                          // notification.info({
+                          //   message: "File Uploaded Successfully",
+                          // });
                         });
                       }}
                     >
