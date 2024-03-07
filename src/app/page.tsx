@@ -1,18 +1,15 @@
 "use client";
-
-import FileShare from "@/components/FileShare";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form,Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import GradientCircles from "../components/circularUI";
-
+import Image from "next/image";
 const socket: Socket = io("https://fileshare-backend-bezv.onrender.com");
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userLists, setUserLists] = useState<string[]>([]);
   const showModal = () => {
-    // handleCompile();
     setIsModalOpen(true);
   };
 
@@ -52,7 +49,7 @@ export default function Home() {
   }
 
   return (
-    <div className={` ${isRoomJoined ? "bg-white" : " bg-[#e991a4]"} `}>
+    <div className={` ${isRoomJoined ? "bg-white" : " bg-[#061019]"} `}>
       <Modal
         open={isModalOpen}
         footer={false}
@@ -63,15 +60,23 @@ export default function Home() {
         }}
       >
         <Form onFinish={joinRoom} layout="vertical">
-          <Form.Item name={"username"} label="User name">
-            <Input placeholder="username" type="text" />
+          <Form.Item
+            name={"username"}
+            label="Username"
+            rules={[{ required: true, message: "Please enter your username" }]}
+          >
+            <Input placeholder="Enter your username" />
           </Form.Item>
-          <Form.Item name={"roomId"} label="roomid">
-            <Input placeholder="roomId" type="text" />
+          <Form.Item
+            name={"roomId"}
+            label="Room ID"
+            rules={[{ required: true, message: "Please enter the room ID" }]}
+          >
+            <Input placeholder="Enter the room ID" />
           </Form.Item>
-          <Form.Item name={"roomId"}>
-            <Button htmlType="submit" type="primary" className="bg-green-400">
-              Create
+          <Form.Item>
+            <Button htmlType="submit" type="primary" className="bg-green-400 mt-8 w-full">
+              Join Room
             </Button>
           </Form.Item>
         </Form>
@@ -86,22 +91,48 @@ export default function Home() {
           socket={socket}
         />
       ) : (
-        // <FileShare
-        //   currentUser={username}
-        //   roomId={roomId}
-        //   userLists={userLists}
-        //   activeUsers={activeUsersCount}
-        //   socket={socket}
-        // />
-        <div className="flex justify-center items-center h-[100vh]">
-          <Button
-            onClick={showModal}
-            type="primary"
-            className="bg-[#FFFFFF] text-[#FEE3E6]"
-          >
-            Start Now
-          </Button>
-        </div>
+        <>
+          <div className="flex  flex-col gap-5 justify-center items-center h-[100vh]">
+            <div className="bg-white px-20  pb-20 pt-10 rounded-3xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
+              <div className="flex justify-center">
+                <Image
+                    src="https://cdn-icons-png.flaticon.com/512/1037/1037325.png"
+                    height={100}
+                    width={100} alt={""}                />
+              </div>
+              <h1 className=" font-bold text-2xl text-center">
+                File Sharing App
+              </h1>
+              <p className=" text-center py-2 font-bold text-xs">
+              &quot;Create Your Room and Share Your Files with Ease!&quot;
+              </p>
+              <button
+                onClick={showModal}
+                type="button"
+                className="button mx-20 my-5"
+              >
+                <span className="button__text">Room</span>
+                <span className="button__icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke="currentColor"
+                    height="24"
+                    fill="none"
+                    className="svg"
+                  >
+                    <line y2="19" y1="5" x2="12" x1="12"></line>
+                    <line y2="12" y1="12" x2="19" x1="5"></line>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
