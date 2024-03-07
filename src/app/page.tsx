@@ -1,9 +1,9 @@
 "use client";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form,Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import GradientCircles from "../components/circularUI";
-
+import Image from "next/image";
 const socket: Socket = io("https://fileshare-backend-bezv.onrender.com");
 
 export default function Home() {
@@ -95,17 +95,16 @@ export default function Home() {
           <div className="flex  flex-col gap-5 justify-center items-center h-[100vh]">
             <div className="bg-white px-20  pb-20 pt-10 rounded-3xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
               <div className="flex justify-center">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/1037/1037325.png"
-                  height={100}
-                  width={100}
-                />
+                <Image
+                    src="https://cdn-icons-png.flaticon.com/512/1037/1037325.png"
+                    height={100}
+                    width={100} alt={""}                />
               </div>
               <h1 className=" font-bold text-2xl text-center">
                 File Sharing App
               </h1>
               <p className=" text-center py-2 font-bold text-xs">
-                "Create Your Room and Share Your Files with Ease!"
+              &quot;Create Your Room and Share Your Files with Ease!&quot;
               </p>
               <button
                 onClick={showModal}
