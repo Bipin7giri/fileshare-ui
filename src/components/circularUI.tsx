@@ -28,6 +28,15 @@ const GradientCircles = ({
   const [loading, setLoading] = useState(false);
 
   const uploadFile = async (file: File) => {
+    debugger;
+    const fileSizeInMB = file.size / (1024 * 1024);
+
+    // Check if the file size is smaller than 50 MB
+    if (fileSizeInMB > 50) {
+      return notification.error({
+        message: "File too large",
+      });
+    }
     const formData = new FormData();
     formData.append("file", file);
 
