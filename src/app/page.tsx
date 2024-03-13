@@ -24,18 +24,6 @@ export default function Home() {
   const [roomId, setRoomId] = useState("");
   const [username, setUsername] = useState("");
   const [isRoomJoined, setRoomJoined] = useState(false);
-  useEffect(() => {
-    socket.on("active_users_count", (data) => {
-      if (data.roomId === roomId) {
-        console.log(data);
-        setUserLists(data.usersLists);
-        setActiveUsersCount(data.count);
-      }
-    });
-    return () => {
-      socket.off("active_users_count");
-    };
-  }, [roomId]);
 
   function joinRoom(values: any) {
     setRoomJoined(true);
@@ -48,8 +36,23 @@ export default function Home() {
     handleCancel();
   }
 
+  useEffect(() => {
+    socket.on("active_users_count", (data) => {
+      if (data.roomId === roomId) {
+        console.log(data,"data of socket");
+        setUserLists(data.usersLists);
+        setActiveUsersCount(data.count);
+      }
+    });
+    return () => {
+      socket.off("active_users_count");
+    };
+  }, [roomId]);
   return (
-    <div className={` ${isRoomJoined ? "bg-white" : " bg-[#061019]"} `}>
+    <div className={` ${isRoomJoined ? "bg-white" : " bg-[#061019]"} relative `}>
+       <div className="text-white hot-jar absolute bottom-[30px] right-[60px]">
+         hello
+       </div>
       <Modal
         open={isModalOpen}
         footer={false}
@@ -85,7 +88,6 @@ export default function Home() {
           </Form.Item>
         </Form>
       </Modal>
-
       {isRoomJoined ? (
         <GradientCircles
           currentUser={username}
