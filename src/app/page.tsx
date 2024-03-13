@@ -49,7 +49,10 @@ export default function Home() {
     };
   }, [roomId]);
   return (
-    <div className={` ${isRoomJoined ? "bg-white" : " bg-[#061019]"} `}>
+    <div className={` ${isRoomJoined ? "bg-white" : " bg-[#061019]"} relative `}>
+       <div className="text-white hot-jar absolute bottom-[30px] right-[60px]">
+         hello
+       </div>
       <Modal
         open={isModalOpen}
         footer={false}
